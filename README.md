@@ -1,4 +1,4 @@
-# WeatherApp
+# Weather Report App
 
 A simple and user-friendly web application to retrieve and display weather information for a specified city. This application fetches data from the Open-Meteo API, eliminating the need for an API key.
 
