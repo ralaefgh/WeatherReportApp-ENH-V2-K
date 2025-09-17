@@ -737,7 +737,7 @@
             try {
                 const data = generateReportData();
                 console.log('Generated report data:', data); // Debug log
-                
+
                 let content, filename, mimeType;
 
                 switch (format) {
@@ -760,7 +760,7 @@
 
                 console.log('Generated content preview:', content.substring(0, 500)); // Debug log
                 downloadFile(content, filename, mimeType);
-                
+
             } catch (error) {
                 console.error('Export error:', error);
                 alert('Error generating report: ' + error.message);
@@ -991,6 +991,20 @@
                 96: "Thunderstorm with hail", 99: "Thunderstorm with heavy hail"
             };
             return descriptions[code] || "Unknown weather";
+        }
+
+        function getWindDirectionText(degrees) {
+            if (degrees == null || isNaN(degrees)) return "N/A";
+            const deg = ((degrees % 360) + 360) % 360;
+            if (deg >= 337.5 || deg < 22.5) return "North";
+            if (deg >= 22.5 && deg < 67.5) return "Northeast";
+            if (deg >= 67.5 && deg < 112.5) return "East";
+            if (deg >= 112.5 && deg < 157.5) return "Southeast";
+            if (deg >= 157.5 && deg < 202.5) return "South";
+            if (deg >= 202.5 && deg < 247.5) return "Southwest";
+            if (deg >= 247.5 && deg < 292.5) return "West";
+            if (deg >= 292.5 && deg < 337.5) return "Northwest";
+            return "Variable";
         }
 
         // Initialize with metric units
