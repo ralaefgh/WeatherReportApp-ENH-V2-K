@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,8 +42,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         .loading-spinner {
@@ -55,8 +63,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .forecast-card {
@@ -129,11 +142,13 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container mx-auto p-4 max-w-6xl">
         <!-- Header -->
         <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            <h1
+                class="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                 <i class="fas fa-cloud-sun mr-3"></i>Weather Pro
             </h1>
             <p class="text-gray-400">Advanced weather forecasting with detailed insights</p>
@@ -143,15 +158,19 @@
         <div class="glass-card rounded-2xl p-6 mb-6">
             <div class="flex flex-col md:flex-row gap-4 items-center">
                 <div class="flex-1 relative">
-                    <input type="text" id="city" placeholder="Enter city name..." 
-                           class="w-full p-4 rounded-xl bg-slate-800 text-white border border-slate-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
-                    <div id="search-suggestions" class="absolute top-full left-0 right-0 bg-slate-800 rounded-xl mt-2 shadow-xl z-10 hidden"></div>
+                    <input type="text" id="city" placeholder="Enter city name..."
+                        class="w-full p-4 rounded-xl bg-slate-800 text-white border border-slate-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
+                    <div id="search-suggestions"
+                        class="absolute top-full left-0 right-0 bg-slate-800 rounded-xl mt-2 shadow-xl z-10 hidden">
+                    </div>
                 </div>
-                <button onclick="getCurrentLocation()" class="px-6 py-4 bg-green-600 hover:bg-green-700 rounded-xl transition-all flex items-center gap-2">
+                <button onclick="getCurrentLocation()"
+                    class="px-6 py-4 bg-green-600 hover:bg-green-700 rounded-xl transition-all flex items-center gap-2">
                     <i class="fas fa-location-arrow"></i>
                     <span class="hidden md:inline">Current Location</span>
                 </button>
-                <button onclick="getWeather()" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-xl transition-all flex items-center gap-2">
+                <button onclick="getWeather()"
+                    class="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-xl transition-all flex items-center gap-2">
                     <i class="fas fa-search"></i>
                     Get Weather
                 </button>
@@ -161,8 +180,12 @@
             <div class="flex justify-center mt-4">
                 <div class="unit-toggle relative">
                     <div class="unit-toggle-slider" id="unitSlider"></div>
-                    <button onclick="toggleUnits('metric')" class="px-4 py-2 text-sm font-medium relative z-10 transition-colors" id="metricBtn">°C / km/h</button>
-                    <button onclick="toggleUnits('imperial')" class="px-4 py-2 text-sm font-medium relative z-10 transition-colors" id="imperialBtn">°F / mph</button>
+                    <button onclick="toggleUnits('metric')"
+                        class="px-4 py-2 text-sm font-medium relative z-10 transition-colors" id="metricBtn">°C /
+                        km/h</button>
+                    <button onclick="toggleUnits('imperial')"
+                        class="px-4 py-2 text-sm font-medium relative z-10 transition-colors" id="imperialBtn">°F /
+                        mph</button>
                 </div>
             </div>
         </div>
@@ -287,16 +310,20 @@
                 <i class="fas fa-download"></i>Export Weather Report
             </h3>
             <div class="flex flex-wrap gap-3">
-                <button onclick="exportReport('txt')" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition-all flex items-center gap-2">
+                <button onclick="exportReport('txt')"
+                    class="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition-all flex items-center gap-2">
                     <i class="fas fa-file-alt"></i>Text File
                 </button>
-                <button onclick="exportReport('json')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-all flex items-center gap-2">
+                <button onclick="exportReport('json')"
+                    class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-all flex items-center gap-2">
                     <i class="fas fa-code"></i>JSON
                 </button>
-                <button onclick="exportReport('csv')" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-all flex items-center gap-2">
+                <button onclick="exportReport('csv')"
+                    class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-all flex items-center gap-2">
                     <i class="fas fa-table"></i>CSV
                 </button>
-                <button onclick="shareWeather()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-all flex items-center gap-2">
+                <button onclick="shareWeather()"
+                    class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-all flex items-center gap-2">
                     <i class="fas fa-share"></i>Share
                 </button>
             </div>
@@ -312,19 +339,19 @@
         let precipitationChart = null;
 
         // Initialize app
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             updateSearchHistory();
             setupEventListeners();
         });
 
         function setupEventListeners() {
-            document.getElementById('city').addEventListener('keypress', function(e) {
+            document.getElementById('city').addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
                     getWeather();
                 }
             });
 
-            document.getElementById('city').addEventListener('input', function(e) {
+            document.getElementById('city').addEventListener('input', function (e) {
                 // Could add search suggestions here
             });
         }
@@ -365,7 +392,7 @@
             }
 
             showLoading(true);
-            
+
             navigator.geolocation.getCurrentPosition(
                 async (position) => {
                     const { latitude, longitude } = position.coords;
@@ -373,7 +400,7 @@
                         const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?latitude=${latitude}&longitude=${longitude}&count=1`;
                         const response = await fetch(geoUrl);
                         const data = await response.json();
-                        
+
                         if (data.results && data.results.length > 0) {
                             document.getElementById('city').value = data.results[0].name;
                             await getWeatherByCoords(latitude, longitude, data.results[0].name);
@@ -412,7 +439,7 @@
 
                 const { latitude, longitude, name, country } = geoData.results[0];
                 await getWeatherByCoords(latitude, longitude, `${name}, ${country}`);
-                
+
                 // Add to search history
                 addToSearchHistory(name, country);
 
@@ -426,7 +453,7 @@
             try {
                 // Enhanced weather API call with more parameters
                 const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,precipitation,wind_speed_10m,wind_direction_10m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,wind_speed_10m_max,wind_direction_10m_dominant&forecast_days=7&timezone=auto`;
-                
+
                 const weatherResponse = await fetch(weatherUrl);
                 const weatherData = await weatherResponse.json();
 
@@ -448,7 +475,7 @@
             if (!currentWeatherData) return;
 
             const { current_weather, hourly, daily, locationName } = currentWeatherData;
-            
+
             // Show all sections
             document.getElementById('currentWeather').classList.remove('hidden');
             document.getElementById('hourlyForecast').classList.remove('hidden');
@@ -458,16 +485,16 @@
 
             // Current weather
             displayCurrentWeather(current_weather, locationName);
-            
+
             // Hourly forecast
             displayHourlyForecast(hourly);
-            
+
             // Weekly forecast
             displayWeeklyForecast(daily);
-            
+
             // Charts
             displayCharts(hourly, daily);
-            
+
             // Check for weather alerts
             checkWeatherAlerts(current_weather, daily);
         }
@@ -475,7 +502,7 @@
         function displayCurrentWeather(current, locationName) {
             const temp = convertTemperature(current.temperature);
             const windSpeed = convertWindSpeed(current.windspeed);
-            
+
             document.getElementById('currentCity').textContent = locationName;
             document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
                 weekday: 'long',
@@ -486,7 +513,7 @@
             document.getElementById('currentTemp').textContent = `${Math.round(temp)}°${currentUnits === 'metric' ? 'C' : 'F'}`;
             document.getElementById('currentCondition').textContent = getWeatherDescription(current.weathercode);
             document.getElementById('currentIcon').innerHTML = `<i class="${getWeatherIcon(current.weathercode, true)}"></i>`;
-            
+
             // Additional details (simulated for demo)
             document.getElementById('feelsLike').textContent = `${Math.round(temp + 2)}°${currentUnits === 'metric' ? 'C' : 'F'}`;
             document.getElementById('humidity').textContent = '65%';
@@ -497,12 +524,12 @@
         function displayHourlyForecast(hourly) {
             const hourlyList = document.getElementById('hourlyList');
             hourlyList.innerHTML = '';
-            
+
             for (let i = 0; i < 24; i++) {
                 const time = new Date(hourly.time[i]);
                 const temp = convertTemperature(hourly.temperature_2m[i]);
                 const precipitation = hourly.precipitation_probability[i];
-                
+
                 const hourlyItem = document.createElement('div');
                 hourlyItem.className = 'flex-shrink-0 bg-slate-800/50 rounded-xl p-4 text-center min-w-[100px]';
                 hourlyItem.innerHTML = `
@@ -518,16 +545,16 @@
         function displayWeeklyForecast(daily) {
             const forecastList = document.getElementById('forecastList');
             forecastList.innerHTML = '';
-            
+
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            
+
             for (let i = 0; i < 7; i++) {
                 const date = new Date(daily.time[i]);
                 const dayName = i === 0 ? 'Today' : days[date.getDay()];
                 const maxTemp = convertTemperature(daily.temperature_2m_max[i]);
                 const minTemp = convertTemperature(daily.temperature_2m_min[i]);
                 const precipitation = daily.precipitation_probability_max[i];
-                
+
                 const forecastItem = document.createElement('div');
                 forecastItem.className = 'forecast-card bg-slate-800/50 rounded-xl p-4 flex items-center justify-between';
                 forecastItem.innerHTML = `
@@ -551,7 +578,7 @@
             // Temperature chart
             const tempCtx = document.getElementById('temperatureChart').getContext('2d');
             if (temperatureChart) temperatureChart.destroy();
-            
+
             temperatureChart = new Chart(tempCtx, {
                 type: 'line',
                 data: {
@@ -572,11 +599,11 @@
                         legend: { display: false }
                     },
                     scales: {
-                        y: { 
+                        y: {
                             grid: { color: 'rgba(148, 163, 184, 0.1)' },
                             ticks: { color: '#cbd5e1' }
                         },
-                        x: { 
+                        x: {
                             grid: { color: 'rgba(148, 163, 184, 0.1)' },
                             ticks: { color: '#cbd5e1' }
                         }
@@ -587,7 +614,7 @@
             // Precipitation chart
             const precipCtx = document.getElementById('precipitationChart').getContext('2d');
             if (precipitationChart) precipitationChart.destroy();
-            
+
             precipitationChart = new Chart(precipCtx, {
                 type: 'bar',
                 data: {
@@ -606,11 +633,11 @@
                         legend: { display: false }
                     },
                     scales: {
-                        y: { 
+                        y: {
                             grid: { color: 'rgba(148, 163, 184, 0.1)' },
                             ticks: { color: '#cbd5e1' }
                         },
-                        x: { 
+                        x: {
                             grid: { color: 'rgba(148, 163, 184, 0.1)' },
                             ticks: { color: '#cbd5e1' }
                         }
@@ -621,7 +648,7 @@
 
         // Unit conversion functions
         function convertTemperature(celsius) {
-            return currentUnits === 'metric' ? celsius : (celsius * 9/5) + 32;
+            return currentUnits === 'metric' ? celsius : (celsius * 9 / 5) + 32;
         }
 
         function convertWindSpeed(kmh) {
@@ -633,7 +660,7 @@
             const slider = document.getElementById('unitSlider');
             const metricBtn = document.getElementById('metricBtn');
             const imperialBtn = document.getElementById('imperialBtn');
-            
+
             if (unit === 'metric') {
                 slider.style.transform = 'translateX(0)';
                 metricBtn.style.color = 'white';
@@ -643,7 +670,7 @@
                 metricBtn.style.color = '#cbd5e1';
                 imperialBtn.style.color = 'white';
             }
-            
+
             if (currentWeatherData) {
                 displayWeatherData();
             }
@@ -662,15 +689,15 @@
         function updateSearchHistory() {
             const historyContainer = document.getElementById('searchHistory');
             const historyList = document.getElementById('historyList');
-            
+
             if (searchHistory.length === 0) {
                 historyContainer.classList.add('hidden');
                 return;
             }
-            
+
             historyContainer.classList.remove('hidden');
             historyList.innerHTML = '';
-            
+
             searchHistory.forEach(location => {
                 const historyItem = document.createElement('button');
                 historyItem.className = 'search-history-item px-3 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm transition-all';
@@ -687,7 +714,7 @@
         function checkWeatherAlerts(current, daily) {
             const alertsContainer = document.getElementById('weatherAlerts');
             const alertMessage = document.getElementById('alertMessage');
-            
+
             // Simple alert logic (can be enhanced)
             if (current.windspeed > 50) {
                 alertMessage.textContent = 'High wind speeds expected. Exercise caution when outdoors.';
@@ -706,10 +733,10 @@
                 alert('No weather data to export');
                 return;
             }
-            
+
             const data = generateReportData();
             let content, filename, mimeType;
-            
+
             switch (format) {
                 case 'txt':
                     content = generateTextReport(data);
@@ -727,7 +754,7 @@
                     mimeType = 'text/csv';
                     break;
             }
-            
+
             downloadFile(content, filename, mimeType);
         }
 
@@ -735,7 +762,7 @@
             const { current_weather, daily, hourly, locationName } = currentWeatherData;
             const now = new Date();
             const currentHour = now.getHours();
-            
+
             // Calculate next 3-hour precipitation
             let next3HourPrecipitation = 0;
             for (let i = currentHour; i < Math.min(currentHour + 3, 24); i++) {
@@ -743,68 +770,18 @@
                     next3HourPrecipitation += hourly.precipitation[i];
                 }
             }
-            
+
             // Get today's detailed info
             const todayPrecipitation = daily.precipitation_sum[0] || 0;
             const todayPrecipitationProb = daily.precipitation_probability_max[0] || 0;
-            
-            return {
-                location: locationName,
-                generated: new Date().toISOString(),
-                generatedLocal: now.toLocaleString(),
-                current: {
-                    temperature: current_weather.temperature,
-                    temperatureF: Math.round((current_weather.temperature * 9/5) + 32),
-                    condition: getWeatherDescription(current_weather.weathercode),
-                    windSpeed: current_weather.windspeed,
-                    windSpeedMph: Math.round(current_weather.windspeed * 0.621371),
-                    windDirection: current_weather.winddirection,
-                    windDirectionText: getWindDirectionText(current_weather.winddirection),
-                    weatherCode: current_weather.weathercode
-                },
-                today: {
-                    date: daily.time[0],
-                    maxTemp: daily.temperature_2m_max[0],
-                    maxTempF: Math.round((daily.temperature_2m_max[0] * 9/5) + 32),
-                    minTemp: daily.temperature_2m_min[0],
-                    minTempF: Math.round((daily.temperature_2m_min[0] * 9/5) + 32),
-                    totalPrecipitation: todayPrecipitation,
-                    precipitationProbability: todayPrecipitationProb,
-                    maxWindSpeed: daily.wind_speed_10m_max[0],
-                    maxWindSpeedMph: Math.round(daily.wind_speed_10m_max[0] * 0.621371),
-                    windDirection: daily.wind_direction_10m_dominant[0],
-                    windDirectionText: getWindDirectionText(daily.wind_direction_10m_dominant[0])
-                },
-                next3Hours: {
-                    startTime: `${currentHour}:00`,
-                    endTime: `${(currentHour + 3) % 24}:00`,
-                    precipitation: next3HourPrecipitation,
-                    hourlyDetails: []
-                },
-                forecast: daily.time.slice(0, 7).map((date, i) => ({
-                    date,
-                    dayName: new Date(date).toLocaleDateString('en-US', { weekday: 'long' }),
-                    maxTemp: daily.temperature_2m_max[i],
-                    maxTempF: Math.round((daily.temperature_2m_max[i] * 9/5) + 32),
-                    minTemp: daily.temperature_2m_min[i],
-                    minTempF: Math.round((daily.temperature_2m_min[i] * 9/5) + 32),
-                    precipitation: daily.precipitation_sum[i],
-                    precipitationProbability: daily.precipitation_probability_max[i],
-                    maxWindSpeed: daily.wind_speed_10m_max[i],
-                    maxWindSpeedMph: Math.round(daily.wind_speed_10m_max[i] * 0.621371),
-                    windDirection: daily.wind_direction_10m_dominant[i],
-                    windDirectionText: getWindDirectionText(daily.wind_direction_10m_dominant[i]),
-                    condition: getWeatherDescription(daily.weather_code[i])
-                }))
-            };
-            
+
             const reportData = {
                 location: locationName,
                 generated: new Date().toISOString(),
                 generatedLocal: now.toLocaleString(),
                 current: {
                     temperature: current_weather.temperature,
-                    temperatureF: Math.round((current_weather.temperature * 9/5) + 32),
+                    temperatureF: Math.round((current_weather.temperature * 9 / 5) + 32),
                     condition: getWeatherDescription(current_weather.weathercode),
                     windSpeed: current_weather.windspeed,
                     windSpeedMph: Math.round(current_weather.windspeed * 0.621371),
@@ -815,9 +792,9 @@
                 today: {
                     date: daily.time[0],
                     maxTemp: daily.temperature_2m_max[0],
-                    maxTempF: Math.round((daily.temperature_2m_max[0] * 9/5) + 32),
+                    maxTempF: Math.round((daily.temperature_2m_max[0] * 9 / 5) + 32),
                     minTemp: daily.temperature_2m_min[0],
-                    minTempF: Math.round((daily.temperature_2m_min[0] * 9/5) + 32),
+                    minTempF: Math.round((daily.temperature_2m_min[0] * 9 / 5) + 32),
                     totalPrecipitation: todayPrecipitation,
                     precipitationProbability: todayPrecipitationProb,
                     maxWindSpeed: daily.wind_speed_10m_max[0],
@@ -835,9 +812,9 @@
                     date,
                     dayName: new Date(date).toLocaleDateString('en-US', { weekday: 'long' }),
                     maxTemp: daily.temperature_2m_max[i],
-                    maxTempF: Math.round((daily.temperature_2m_max[i] * 9/5) + 32),
+                    maxTempF: Math.round((daily.temperature_2m_max[i] * 9 / 5) + 32),
                     minTemp: daily.temperature_2m_min[i],
-                    minTempF: Math.round((daily.temperature_2m_min[i] * 9/5) + 32),
+                    minTempF: Math.round((daily.temperature_2m_min[i] * 9 / 5) + 32),
                     precipitation: daily.precipitation_sum[i],
                     precipitationProbability: daily.precipitation_probability_max[i],
                     maxWindSpeed: daily.wind_speed_10m_max[i],
@@ -847,14 +824,14 @@
                     condition: getWeatherDescription(daily.weather_code[i])
                 }))
             };
-            
+
             // Add hourly details for next 3 hours
             for (let i = currentHour; i < Math.min(currentHour + 3, 24); i++) {
                 if (hourly.time && hourly.time[i]) {
                     reportData.next3Hours.hourlyDetails.push({
                         time: new Date(hourly.time[i]).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
                         temperature: hourly.temperature_2m[i],
-                        temperatureF: Math.round((hourly.temperature_2m[i] * 9/5) + 32),
+                        temperatureF: Math.round((hourly.temperature_2m[i] * 9 / 5) + 32),
                         precipitation: hourly.precipitation[i] || 0,
                         precipitationProb: hourly.precipitation_probability[i] || 0,
                         windSpeed: hourly.wind_speed_10m[i] || 0,
@@ -863,7 +840,7 @@
                     });
                 }
             }
-            
+
             return reportData;
         }
 
@@ -871,27 +848,27 @@
             let report = `Weather Report for ${data.location}\n`;
             report += `Report generated on: ${data.generatedLocal}\n`;
             report += `${'='.repeat(60)}\n\n`;
-            
+
             // Current Weather Section
             report += `Current Weather\n`;
             report += `  Temperature: ${data.current.temperature}°C (${data.current.temperatureF}°F)\n`;
             report += `  Weather: ${data.current.condition}\n`;
             report += `  Wind: ${data.current.windSpeed} km/h (${data.current.windSpeedMph} mph), ${data.current.windDirectionText} (${data.current.windDirection}°)\n\n`;
-            
+
             // Today's Detailed Forecast
             const todayDate = new Date(data.today.date);
             const todayName = todayDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-            
+
             report += `Today's Forecast - ${todayName}\n`;
             report += `  Temperature: High of ${data.today.maxTemp}°C (${data.today.maxTempF}°F), low of ${data.today.minTemp}°C (${data.today.minTempF}°F) at night.\n`;
             report += `  Precipitation: ${data.today.precipitationProbability}% chance for the entire day.\n`;
             report += `  Total Precipitation: ${data.today.totalPrecipitation} mm\n`;
             report += `  Wind: ${data.today.windDirectionText} (${data.today.windDirection}°) at max ${data.today.maxWindSpeed} km/h (${data.today.maxWindSpeedMph} mph).\n\n`;
-            
+
             // Next 3 Hours Section
             report += `Next 3 Hours (${data.next3Hours.startTime} to ${data.next3Hours.endTime})\n`;
             report += `  Estimated Total Precipitation: ${data.next3Hours.precipitation.toFixed(2)} mm\n`;
-            
+
             if (data.next3Hours.hourlyDetails && data.next3Hours.hourlyDetails.length > 0) {
                 report += `  Hourly Breakdown:\n`;
                 data.next3Hours.hourlyDetails.forEach(hour => {
@@ -899,16 +876,16 @@
                 });
             }
             report += `\n`;
-            
+
             // Extended Forecast
             report += `${'─'.repeat(60)}\n`;
             report += `7-Day Extended Forecast:\n\n`;
-            
+
             data.forecast.forEach((day, index) => {
                 const date = new Date(day.date);
                 const dayName = index === 0 ? 'Today' : day.dayName;
                 const dateStr = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-                
+
                 report += `${dayName}, ${dateStr}\n`;
                 report += `  Temperature: High of ${day.maxTemp}°C (${day.maxTempF}°F), low of ${day.minTemp}°C (${day.minTempF}°F) at night.\n`;
                 report += `  Weather: ${day.condition}\n`;
@@ -916,7 +893,7 @@
                 report += `  Total Precipitation: ${day.precipitation} mm\n`;
                 report += `  Wind: ${day.windDirectionText} (${day.windDirection}°) at max ${day.maxWindSpeed} km/h (${day.maxWindSpeedMph} mph).\n\n`;
             });
-            
+
             // Additional Information
             report += `${'─'.repeat(60)}\n`;
             report += `Additional Information:\n`;
@@ -925,25 +902,25 @@
             report += `• Wind speeds represent maximum expected values\n`;
             report += `• Temperature ranges show daily highs and overnight lows\n`;
             report += `• Data provided by Open-Meteo API\n\n`;
-            
+
             report += `Generated by Weather Pro - Enhanced Weather Reporting\n`;
             report += `Report ID: WR-${Date.now()}\n`;
-            
+
             return report;
         }
 
         function generateCSVReport(data) {
             let csv = 'Date,Day,Max Temp (°C),Max Temp (°F),Min Temp (°C),Min Temp (°F),Condition,Precipitation (mm),Rain Probability (%),Max Wind Speed (km/h),Max Wind Speed (mph),Wind Direction\n';
-            
+
             data.forecast.forEach(day => {
                 csv += `${day.date},${day.dayName},${day.maxTemp},${day.maxTempF},${day.minTemp},${day.minTempF},"${day.condition}",${day.precipitation},${day.precipitationProbability},${day.maxWindSpeed},${day.maxWindSpeedMph},${day.windDirectionText}\n`;
             });
-            
+
             // Add current conditions as a separate section
             csv += '\n\nCurrent Conditions\n';
             csv += 'Location,Temperature (°C),Temperature (°F),Condition,Wind Speed (km/h),Wind Speed (mph),Wind Direction,Generated\n';
             csv += `"${data.location}",${data.current.temperature},${data.current.temperatureF},"${data.current.condition}",${data.current.windSpeed},${data.current.windSpeedMph},${data.current.windDirectionText},"${data.generatedLocal}"\n`;
-            
+
             return csv;
         }
 
@@ -961,10 +938,10 @@
 
         function shareWeather() {
             if (!currentWeatherData) return;
-            
+
             const data = generateReportData();
             const text = `Weather in ${data.location}: ${data.current.temperature}°C, ${data.current.condition}`;
-            
+
             if (navigator.share) {
                 navigator.share({
                     title: 'Weather Report',
@@ -982,7 +959,7 @@
         function showLoading(show) {
             const loadingState = document.getElementById('loadingState');
             const weatherSections = ['currentWeather', 'hourlyForecast', 'weeklyForecast', 'weatherCharts', 'exportOptions'];
-            
+
             if (show) {
                 loadingState.classList.remove('hidden');
                 weatherSections.forEach(id => document.getElementById(id).classList.add('hidden'));
@@ -1011,4 +988,5 @@
         toggleUnits('metric');
     </script>
 </body>
+
 </html>
