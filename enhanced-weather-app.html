@@ -734,28 +734,37 @@
                 return;
             }
 
-            const data = generateReportData();
-            let content, filename, mimeType;
+            try {
+                const data = generateReportData();
+                console.log('Generated report data:', data); // Debug log
+                
+                let content, filename, mimeType;
 
-            switch (format) {
-                case 'txt':
-                    content = generateTextReport(data);
-                    filename = `weather-report-${data.location.replace(/[^a-z0-9]/gi, '_')}-${new Date().toISOString().split('T')[0]}.txt`;
-                    mimeType = 'text/plain';
-                    break;
-                case 'json':
-                    content = JSON.stringify(data, null, 2);
-                    filename = `weather-data-${data.location.replace(/[^a-z0-9]/gi, '_')}-${new Date().toISOString().split('T')[0]}.json`;
-                    mimeType = 'application/json';
-                    break;
-                case 'csv':
-                    content = generateCSVReport(data);
-                    filename = `weather-forecast-${data.location.replace(/[^a-z0-9]/gi, '_')}-${new Date().toISOString().split('T')[0]}.csv`;
-                    mimeType = 'text/csv';
-                    break;
+                switch (format) {
+                    case 'txt':
+                        content = generateTextReport(data);
+                        filename = `weather-report-${data.location.replace(/[^a-z0-9]/gi, '_')}-${new Date().toISOString().split('T')[0]}.txt`;
+                        mimeType = 'text/plain';
+                        break;
+                    case 'json':
+                        content = JSON.stringify(data, null, 2);
+                        filename = `weather-data-${data.location.replace(/[^a-z0-9]/gi, '_')}-${new Date().toISOString().split('T')[0]}.json`;
+                        mimeType = 'application/json';
+                        break;
+                    case 'csv':
+                        content = generateCSVReport(data);
+                        filename = `weather-forecast-${data.location.replace(/[^a-z0-9]/gi, '_')}-${new Date().toISOString().split('T')[0]}.csv`;
+                        mimeType = 'text/csv';
+                        break;
+                }
+
+                console.log('Generated content preview:', content.substring(0, 500)); // Debug log
+                downloadFile(content, filename, mimeType);
+                
+            } catch (error) {
+                console.error('Export error:', error);
+                alert('Error generating report: ' + error.message);
             }
-
-            downloadFile(content, filename, mimeType);
         }
 
         function generateReportData() {
