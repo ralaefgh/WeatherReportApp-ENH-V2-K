@@ -732,50 +732,218 @@
         }
 
         function generateReportData() {
-            const { current_weather, daily, locationName } = currentWeatherData;
+            const { current_weather, daily, hourly, locationName } = currentWeatherData;
+            const now = new Date();
+            const currentHour = now.getHours();
+            
+            // Calculate next 3-hour precipitation
+            let next3HourPrecipitation = 0;
+            for (let i = currentHour; i < Math.min(currentHour + 3, 24); i++) {
+                if (hourly.precipitation && hourly.precipitation[i]) {
+                    next3HourPrecipitation += hourly.precipitation[i];
+                }
+            }
+            
+            // Get today's detailed info
+            const todayPrecipitation = daily.precipitation_sum[0] || 0;
+            const todayPrecipitationProb = daily.precipitation_probability_max[0] || 0;
+            
             return {
                 location: locationName,
                 generated: new Date().toISOString(),
+                generatedLocal: now.toLocaleString(),
                 current: {
                     temperature: current_weather.temperature,
+                    temperatureF: Math.round((current_weather.temperature * 9/5) + 32),
                     condition: getWeatherDescription(current_weather.weathercode),
                     windSpeed: current_weather.windspeed,
-                    windDirection: current_weather.winddirection
+                    windSpeedMph: Math.round(current_weather.windspeed * 0.621371),
+                    windDirection: current_weather.winddirection,
+                    windDirectionText: getWindDirectionText(current_weather.winddirection),
+                    weatherCode: current_weather.weathercode
                 },
-                forecast: daily.time.map((date, i) => ({
+                today: {
+                    date: daily.time[0],
+                    maxTemp: daily.temperature_2m_max[0],
+                    maxTempF: Math.round((daily.temperature_2m_max[0] * 9/5) + 32),
+                    minTemp: daily.temperature_2m_min[0],
+                    minTempF: Math.round((daily.temperature_2m_min[0] * 9/5) + 32),
+                    totalPrecipitation: todayPrecipitation,
+                    precipitationProbability: todayPrecipitationProb,
+                    maxWindSpeed: daily.wind_speed_10m_max[0],
+                    maxWindSpeedMph: Math.round(daily.wind_speed_10m_max[0] * 0.621371),
+                    windDirection: daily.wind_direction_10m_dominant[0],
+                    windDirectionText: getWindDirectionText(daily.wind_direction_10m_dominant[0])
+                },
+                next3Hours: {
+                    startTime: `${currentHour}:00`,
+                    endTime: `${(currentHour + 3) % 24}:00`,
+                    precipitation: next3HourPrecipitation,
+                    hourlyDetails: []
+                },
+                forecast: daily.time.slice(0, 7).map((date, i) => ({
                     date,
+                    dayName: new Date(date).toLocaleDateString('en-US', { weekday: 'long' }),
                     maxTemp: daily.temperature_2m_max[i],
+                    maxTempF: Math.round((daily.temperature_2m_max[i] * 9/5) + 32),
                     minTemp: daily.temperature_2m_min[i],
+                    minTempF: Math.round((daily.temperature_2m_min[i] * 9/5) + 32),
                     precipitation: daily.precipitation_sum[i],
-                    precipitationProbability: daily.precipitation_probability_max[i]
+                    precipitationProbability: daily.precipitation_probability_max[i],
+                    maxWindSpeed: daily.wind_speed_10m_max[i],
+                    maxWindSpeedMph: Math.round(daily.wind_speed_10m_max[i] * 0.621371),
+                    windDirection: daily.wind_direction_10m_dominant[i],
+                    windDirectionText: getWindDirectionText(daily.wind_direction_10m_dominant[i]),
+                    condition: getWeatherDescription(daily.weather_code[i])
                 }))
             };
+            
+            const reportData = {
+                location: locationName,
+                generated: new Date().toISOString(),
+                generatedLocal: now.toLocaleString(),
+                current: {
+                    temperature: current_weather.temperature,
+                    temperatureF: Math.round((current_weather.temperature * 9/5) + 32),
+                    condition: getWeatherDescription(current_weather.weathercode),
+                    windSpeed: current_weather.windspeed,
+                    windSpeedMph: Math.round(current_weather.windspeed * 0.621371),
+                    windDirection: current_weather.winddirection,
+                    windDirectionText: getWindDirectionText(current_weather.winddirection),
+                    weatherCode: current_weather.weathercode
+                },
+                today: {
+                    date: daily.time[0],
+                    maxTemp: daily.temperature_2m_max[0],
+                    maxTempF: Math.round((daily.temperature_2m_max[0] * 9/5) + 32),
+                    minTemp: daily.temperature_2m_min[0],
+                    minTempF: Math.round((daily.temperature_2m_min[0] * 9/5) + 32),
+                    totalPrecipitation: todayPrecipitation,
+                    precipitationProbability: todayPrecipitationProb,
+                    maxWindSpeed: daily.wind_speed_10m_max[0],
+                    maxWindSpeedMph: Math.round(daily.wind_speed_10m_max[0] * 0.621371),
+                    windDirection: daily.wind_direction_10m_dominant[0],
+                    windDirectionText: getWindDirectionText(daily.wind_direction_10m_dominant[0])
+                },
+                next3Hours: {
+                    startTime: `${currentHour}:00`,
+                    endTime: `${(currentHour + 3) % 24}:00`,
+                    precipitation: next3HourPrecipitation,
+                    hourlyDetails: []
+                },
+                forecast: daily.time.slice(0, 7).map((date, i) => ({
+                    date,
+                    dayName: new Date(date).toLocaleDateString('en-US', { weekday: 'long' }),
+                    maxTemp: daily.temperature_2m_max[i],
+                    maxTempF: Math.round((daily.temperature_2m_max[i] * 9/5) + 32),
+                    minTemp: daily.temperature_2m_min[i],
+                    minTempF: Math.round((daily.temperature_2m_min[i] * 9/5) + 32),
+                    precipitation: daily.precipitation_sum[i],
+                    precipitationProbability: daily.precipitation_probability_max[i],
+                    maxWindSpeed: daily.wind_speed_10m_max[i],
+                    maxWindSpeedMph: Math.round(daily.wind_speed_10m_max[i] * 0.621371),
+                    windDirection: daily.wind_direction_10m_dominant[i],
+                    windDirectionText: getWindDirectionText(daily.wind_direction_10m_dominant[i]),
+                    condition: getWeatherDescription(daily.weather_code[i])
+                }))
+            };
+            
+            // Add hourly details for next 3 hours
+            for (let i = currentHour; i < Math.min(currentHour + 3, 24); i++) {
+                if (hourly.time && hourly.time[i]) {
+                    reportData.next3Hours.hourlyDetails.push({
+                        time: new Date(hourly.time[i]).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+                        temperature: hourly.temperature_2m[i],
+                        temperatureF: Math.round((hourly.temperature_2m[i] * 9/5) + 32),
+                        precipitation: hourly.precipitation[i] || 0,
+                        precipitationProb: hourly.precipitation_probability[i] || 0,
+                        windSpeed: hourly.wind_speed_10m[i] || 0,
+                        windSpeedMph: Math.round((hourly.wind_speed_10m[i] || 0) * 0.621371),
+                        humidity: hourly.relative_humidity_2m[i] || 0
+                    });
+                }
+            }
+            
+            return reportData;
         }
 
         function generateTextReport(data) {
             let report = `Weather Report for ${data.location}\n`;
-            report += `Generated: ${new Date(data.generated).toLocaleString()}\n`;
-            report += `${'='.repeat(50)}\n\n`;
+            report += `Report generated on: ${data.generatedLocal}\n`;
+            report += `${'='.repeat(60)}\n\n`;
             
-            report += `Current Weather:\n`;
-            report += `Temperature: ${data.current.temperature}°C\n`;
-            report += `Condition: ${data.current.condition}\n`;
-            report += `Wind: ${data.current.windSpeed} km/h\n\n`;
+            // Current Weather Section
+            report += `Current Weather\n`;
+            report += `  Temperature: ${data.current.temperature}°C (${data.current.temperatureF}°F)\n`;
+            report += `  Weather: ${data.current.condition}\n`;
+            report += `  Wind: ${data.current.windSpeed} km/h (${data.current.windSpeedMph} mph), ${data.current.windDirectionText} (${data.current.windDirection}°)\n\n`;
             
-            report += `7-Day Forecast:\n`;
-            data.forecast.forEach(day => {
+            // Today's Detailed Forecast
+            const todayDate = new Date(data.today.date);
+            const todayName = todayDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+            
+            report += `Today's Forecast - ${todayName}\n`;
+            report += `  Temperature: High of ${data.today.maxTemp}°C (${data.today.maxTempF}°F), low of ${data.today.minTemp}°C (${data.today.minTempF}°F) at night.\n`;
+            report += `  Precipitation: ${data.today.precipitationProbability}% chance for the entire day.\n`;
+            report += `  Total Precipitation: ${data.today.totalPrecipitation} mm\n`;
+            report += `  Wind: ${data.today.windDirectionText} (${data.today.windDirection}°) at max ${data.today.maxWindSpeed} km/h (${data.today.maxWindSpeedMph} mph).\n\n`;
+            
+            // Next 3 Hours Section
+            report += `Next 3 Hours (${data.next3Hours.startTime} to ${data.next3Hours.endTime})\n`;
+            report += `  Estimated Total Precipitation: ${data.next3Hours.precipitation.toFixed(2)} mm\n`;
+            
+            if (data.next3Hours.hourlyDetails && data.next3Hours.hourlyDetails.length > 0) {
+                report += `  Hourly Breakdown:\n`;
+                data.next3Hours.hourlyDetails.forEach(hour => {
+                    report += `    ${hour.time}: ${hour.temperature}°C (${hour.temperatureF}°F), ${hour.precipitationProb}% rain, ${hour.precipitation}mm, Wind ${hour.windSpeed} km/h, Humidity ${hour.humidity}%\n`;
+                });
+            }
+            report += `\n`;
+            
+            // Extended Forecast
+            report += `${'─'.repeat(60)}\n`;
+            report += `7-Day Extended Forecast:\n\n`;
+            
+            data.forecast.forEach((day, index) => {
                 const date = new Date(day.date);
-                report += `${date.toDateString()}: ${day.maxTemp}°C / ${day.minTemp}°C, ${day.precipitationProbability}% chance of rain\n`;
+                const dayName = index === 0 ? 'Today' : day.dayName;
+                const dateStr = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                
+                report += `${dayName}, ${dateStr}\n`;
+                report += `  Temperature: High of ${day.maxTemp}°C (${day.maxTempF}°F), low of ${day.minTemp}°C (${day.minTempF}°F) at night.\n`;
+                report += `  Weather: ${day.condition}\n`;
+                report += `  Precipitation: ${day.precipitationProbability}% chance for the entire day.\n`;
+                report += `  Total Precipitation: ${day.precipitation} mm\n`;
+                report += `  Wind: ${day.windDirectionText} (${day.windDirection}°) at max ${day.maxWindSpeed} km/h (${day.maxWindSpeedMph} mph).\n\n`;
             });
+            
+            // Additional Information
+            report += `${'─'.repeat(60)}\n`;
+            report += `Additional Information:\n`;
+            report += `• All times are in local timezone\n`;
+            report += `• Precipitation amounts are cumulative\n`;
+            report += `• Wind speeds represent maximum expected values\n`;
+            report += `• Temperature ranges show daily highs and overnight lows\n`;
+            report += `• Data provided by Open-Meteo API\n\n`;
+            
+            report += `Generated by Weather Pro - Enhanced Weather Reporting\n`;
+            report += `Report ID: WR-${Date.now()}\n`;
             
             return report;
         }
 
         function generateCSVReport(data) {
-            let csv = 'Date,Max Temp (°C),Min Temp (°C),Precipitation (mm),Rain Probability (%)\n';
+            let csv = 'Date,Day,Max Temp (°C),Max Temp (°F),Min Temp (°C),Min Temp (°F),Condition,Precipitation (mm),Rain Probability (%),Max Wind Speed (km/h),Max Wind Speed (mph),Wind Direction\n';
+            
             data.forecast.forEach(day => {
-                csv += `${day.date},${day.maxTemp},${day.minTemp},${day.precipitation},${day.precipitationProbability}\n`;
+                csv += `${day.date},${day.dayName},${day.maxTemp},${day.maxTempF},${day.minTemp},${day.minTempF},"${day.condition}",${day.precipitation},${day.precipitationProbability},${day.maxWindSpeed},${day.maxWindSpeedMph},${day.windDirectionText}\n`;
             });
+            
+            // Add current conditions as a separate section
+            csv += '\n\nCurrent Conditions\n';
+            csv += 'Location,Temperature (°C),Temperature (°F),Condition,Wind Speed (km/h),Wind Speed (mph),Wind Direction,Generated\n';
+            csv += `"${data.location}",${data.current.temperature},${data.current.temperatureF},"${data.current.condition}",${data.current.windSpeed},${data.current.windSpeedMph},${data.current.windDirectionText},"${data.generatedLocal}"\n`;
+            
             return csv;
         }
 
